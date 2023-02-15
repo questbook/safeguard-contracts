@@ -1,0 +1,18 @@
+{
+  "celo-mainnet": {
+    "id": 42220,
+    "rpcUrl": "https://forno.celo.org"
+  },
+  "goerli-testnet": {
+    "id": 5,
+    "rpcUrl": "https://goerli.infura.io/v3/{{infura_key}}"
+  },
+  "optimism-mainnet": {
+    "id": 10,
+    "rpcUrl": "https://optimism-mainnet.infura.io/v3/{{infura_key}}"
+  },
+  "polygon-mainnet": {
+    "id": 137,
+    "rpcUrl": "https://polygon-mainnet.infura.io/v3/{{infura_key}}"
+  }
+}
