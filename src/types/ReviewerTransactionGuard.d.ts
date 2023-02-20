@@ -21,7 +21,6 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
   functions: {
-    "addReviewer(address)": FunctionFragment;
     "applicationReg()": FunctionFragment;
     "applicationReviewReg()": FunctionFragment;
     "checkAfterExecution(bytes32,bool)": FunctionFragment;
@@ -30,7 +29,6 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
     "getReviewers()": FunctionFragment;
     "multiSendBytesData()": FunctionFragment;
     "removeGuardBytesData()": FunctionFragment;
-    "removeReviewer(address)": FunctionFragment;
     "reviewers(uint256)": FunctionFragment;
     "safeAddress()": FunctionFragment;
     "setApplicationReg(address)": FunctionFragment;
@@ -38,11 +36,10 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
     "setWorkspaceReg(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "threshold()": FunctionFragment;
-    "updateThreshold(uint96)": FunctionFragment;
+    "updateConfig(address[],uint96)": FunctionFragment;
     "workspaceReg()": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "addReviewer", values: [string]): string;
   encodeFunctionData(
     functionFragment: "applicationReg",
     values?: undefined
@@ -88,10 +85,6 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "removeReviewer",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "reviewers",
     values: [BigNumberish]
   ): string;
@@ -117,18 +110,14 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "threshold", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "updateThreshold",
-    values: [BigNumberish]
+    functionFragment: "updateConfig",
+    values: [string[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "workspaceReg",
     values?: undefined
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "addReviewer",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "applicationReg",
     data: BytesLike
@@ -161,10 +150,6 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
     functionFragment: "removeGuardBytesData",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeReviewer",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "reviewers", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeAddress",
@@ -188,7 +173,7 @@ interface ReviewerTransactionGuardInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "threshold", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "updateThreshold",
+    functionFragment: "updateConfig",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -243,11 +228,6 @@ export class ReviewerTransactionGuard extends BaseContract {
   interface: ReviewerTransactionGuardInterface;
 
   functions: {
-    addReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     applicationReg(overrides?: CallOverrides): Promise<[string]>;
 
     applicationReviewReg(overrides?: CallOverrides): Promise<[string]>;
@@ -287,11 +267,6 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     removeGuardBytesData(overrides?: CallOverrides): Promise<[string]>;
 
-    removeReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     reviewers(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     safeAddress(overrides?: CallOverrides): Promise<[string]>;
@@ -318,18 +293,14 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     threshold(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    updateThreshold(
+    updateConfig(
+      _reviewers: string[],
       _threshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     workspaceReg(overrides?: CallOverrides): Promise<[string]>;
   };
-
-  addReviewer(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   applicationReg(overrides?: CallOverrides): Promise<string>;
 
@@ -370,11 +341,6 @@ export class ReviewerTransactionGuard extends BaseContract {
 
   removeGuardBytesData(overrides?: CallOverrides): Promise<string>;
 
-  removeReviewer(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   reviewers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   safeAddress(overrides?: CallOverrides): Promise<string>;
@@ -401,7 +367,8 @@ export class ReviewerTransactionGuard extends BaseContract {
 
   threshold(overrides?: CallOverrides): Promise<BigNumber>;
 
-  updateThreshold(
+  updateConfig(
+    _reviewers: string[],
     _threshold: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -409,8 +376,6 @@ export class ReviewerTransactionGuard extends BaseContract {
   workspaceReg(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    addReviewer(_address: string, overrides?: CallOverrides): Promise<void>;
-
     applicationReg(overrides?: CallOverrides): Promise<string>;
 
     applicationReviewReg(overrides?: CallOverrides): Promise<string>;
@@ -450,8 +415,6 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     removeGuardBytesData(overrides?: CallOverrides): Promise<string>;
 
-    removeReviewer(_address: string, overrides?: CallOverrides): Promise<void>;
-
     reviewers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     safeAddress(overrides?: CallOverrides): Promise<string>;
@@ -478,7 +441,8 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     threshold(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateThreshold(
+    updateConfig(
+      _reviewers: string[],
       _threshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -489,11 +453,6 @@ export class ReviewerTransactionGuard extends BaseContract {
   filters: {};
 
   estimateGas: {
-    addReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     applicationReg(overrides?: CallOverrides): Promise<BigNumber>;
 
     applicationReviewReg(overrides?: CallOverrides): Promise<BigNumber>;
@@ -533,11 +492,6 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     removeGuardBytesData(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     reviewers(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -567,7 +521,8 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     threshold(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateThreshold(
+    updateConfig(
+      _reviewers: string[],
       _threshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -576,11 +531,6 @@ export class ReviewerTransactionGuard extends BaseContract {
   };
 
   populateTransaction: {
-    addReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     applicationReg(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     applicationReviewReg(
@@ -626,11 +576,6 @@ export class ReviewerTransactionGuard extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    removeReviewer(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     reviewers(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -660,7 +605,8 @@ export class ReviewerTransactionGuard extends BaseContract {
 
     threshold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    updateThreshold(
+    updateConfig(
+      _reviewers: string[],
       _threshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

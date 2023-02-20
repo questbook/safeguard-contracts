@@ -205,21 +205,8 @@ contract ReviewerTransactionGuard is BaseGuard {
         );
     }
 
-    function addReviewer(address _address) external onlySafe {
-        reviewers.push(_address);
-    }
-
-    function removeReviewer(address _address) external onlySafe {
-        for (uint96 i = 0; i < reviewers.length; i++) {
-            if (reviewers[i] == _address) {
-                reviewers[i] = reviewers[reviewers.length - 1];
-                reviewers.pop();
-                break;
-            }
-        }
-    }
-
-    function updateThreshold(uint96 _threshold) external onlySafe {
+    function updateConfig(address[] memory _reviewers, uint96 _threshold) external onlySafe {
+        reviewers = _reviewers;
         threshold = _threshold;
     }
 
